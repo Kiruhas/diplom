@@ -1,0 +1,411 @@
+body{
+    font-size: 15px;
+    font-family: 'Montserrat', bold;
+    margin: 0 auto;
+    line-height: 1.6;
+    background-color: rgb(29, 10, 75);
+    color: #fff;
+}
+  /*
+  font-family: 'Montserrat', sans-serif;
+  d41459 - color ps
+  */
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+  
+h1,h2,h3,h4,h5,h6 {
+    margin:0;
+}
+
+.container {
+    width: 100%;
+    max-width: 1230px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Header */
+
+.header {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: rgb(47, 22, 107);
+}
+
+.margin_header {
+    margin-top: 90px;
+}
+
+.header_inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header_logo {
+    position: relative;
+    height: 60px;
+    width: 100px;
+}
+
+.logo_link {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 60px;
+}
+
+.logo_link img {
+    width: 100px;
+    height: 60px;
+}
+
+.logo_categories {
+    display: flex;
+    justify-content: left;
+    margin: 20px 0 0 10px;
+    font-size: 20px;
+    line-height: 1;
+    font-weight: 700;
+}
+
+.logo_categories a {
+    text-decoration: none;
+    color: #fff;
+    transition: color .15s linear;
+}
+
+.logo_categories a:hover {
+    color: rgb(219, 29, 76);   
+}
+
+.category_films, .category_serials, .category_subscription {
+    margin-right: 10px;
+    list-style-type: none;
+}
+
+/* Navigation */
+
+.nav {
+    font-size: 20px;
+    display: block;
+}
+
+.nav_btn {  
+    margin: auto 5px;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 2ch;
+    transition: background .15s linear;
+}
+
+.nav_btn:last-child {
+    margin-right: 0;
+}
+
+.nav_btn:hover {
+    background-color: rgb(219, 29, 76);
+}
+
+/* Catalog */
+
+.catalog {
+    width: 100%;
+    padding: 0 10px;
+}
+
+.catalog_header {
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.catalog_products {
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+}
+
+.product {
+    position: relative;
+    width: 250px;
+    margin-right: 8%;
+    text-align: center;
+}
+
+
+.product:last-child {
+    margin-right: 0;
+}
+
+.product_link {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.product_poster {
+    position: relative;
+}
+
+.product_poster img {
+    width: 100%;
+}
+
+.product_name {
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    margin: 10px 0 15px 5px;
+    line-height: 1.2;
+}
+
+.product_har {
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+.product_amount {
+    width: 60px;
+    text-align: center;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.minus_prod, .plus_prod {
+    width: 29px;
+    height: 29px;
+    background-color: inherit;
+}
+
+.minus_prod:active, .minus_prod:focus,
+.plus_prod:active, .plus_prod:focus, 
+.button_style:active, .button_style:focus{
+    outline: none;
+}
+
+.button_style {
+    margin-top: 10px;
+    background-color: inherit;
+}
+
+/* Personal */
+
+.personal_header {
+    display: block;
+}
+
+.personal_header_name {
+    font-size: 45px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.personal_header_email {
+    font-size: 20px;
+    margin: 10px auto 20px;
+    color: rgb(119, 140, 255);
+}
+
+.personal_finance {
+    display: flex;
+    justify-content: space-between;
+}
+
+.finance_sub {
+    width: 69%;
+    background-color: rgb(51, 31, 97);
+    transition: background .15s linear;
+    cursor: pointer;
+}
+
+.sub_content {
+    margin: 0 20px;
+}
+
+.sub_head {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1;
+    margin: 10px auto 5px;
+}
+
+.sub_timeout {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.sub_control {
+    font-size: 22px;
+    margin: 20px auto 5px;
+    font-weight: 700;
+}
+
+.finance_money {
+    width: 29%;
+    background-color: rgb(51, 31, 97);
+    transition: background .15s linear;
+    cursor: pointer;
+}
+
+.money_content {
+    margin: 0 20px;
+}
+
+.money_head {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1;
+    margin: 10px auto 5px;
+}
+
+.money_timeout {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.money_control {
+    font-size: 22px;
+    margin: 20px auto 5px;
+    font-weight: 700;
+}
+
+.finance_sub:hover, .finance_money:hover {
+    background-color: rgb(73, 51, 126);
+}
+
+.personal_back {
+    display: flex;
+    justify-content: start;
+    margin: 25px 5px;
+}
+
+.back_changepass img, .back_out img {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+}
+
+.back_changepass, .back_out{
+    position: relative;
+    height: 30px;
+    transition: color .15s linear;
+    cursor: pointer;
+}
+
+.back_change_name, .back_out_name {
+    line-height: 2;
+    margin-left: 35px;
+    margin-right: 15px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.back_out_word, .back_change_word {
+    text-decoration: none;
+    color: #fff;
+    transition: color .2s linear;
+}
+
+.back_changepass:hover a, .back_out:hover a {
+    color: rgb(219, 29, 76);
+}
+
+.authorizate {
+    display: inline-block;
+    width: 100%;
+    height: 245px;
+    align-items: center;
+}
+
+.authorizate_center {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    margin: 100px auto;
+}
+
+.authorizate_login {
+    background-color: rgb(47, 22, 107);
+}
+
+.authorizate_login:hover {
+    background-color: rgb(65, 38, 126);
+    border: 2px solid rgb(219, 29, 76);    
+    transform: translate(-5px, 0) scale(1.06);
+}
+
+.authorizate_ili {
+    font-size: 20px;
+    line-height: 2;
+}
+
+.authorizate_register, .authorizate_login {
+    margin:auto 30px;
+    border: 2px solid transparent;
+    border-radius: 2ch;
+    cursor: pointer;
+    font-size: 26px;
+    transition: background .3s linear,
+    transform .3s linear, 
+    border .5s ease-in-out;
+}
+
+.authorizate_register {
+    background-color: rgb(219, 29, 76);
+}
+
+.authorizate_register:hover {
+    background-color: rgb(245, 70, 114);
+    border: 2px solid rgb(104, 69, 187);
+    transform: translate(5px, 0) scale(1.06);
+}
+
+.authorizate_login a, .authorizate_register a {
+    text-decoration: none;
+    color: #fff;
+    margin: 3px 20px;
+}
+
+.input_data {
+    position: relative;
+    margin-top: 30%;
+    width: 100%;
+}
+
+.lk_error {
+    width: 100%;
+    text-align: center;
+    color: rgb(219, 29, 76);
+    font-size: 20px;
+    transform: translate(0, -20px);
+}
+
+/* Authorizate form */
+
+.authorizate_form {
+    height: 200px;
+}
+
+.auth_form {
+    position: absolute;
+    max-width: 470px;
+    width: 100%;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
