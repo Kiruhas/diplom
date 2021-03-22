@@ -202,6 +202,10 @@ input::-webkit-inner-spin-button {
     background-color: inherit;
 }
 
+.delete_prod {
+    margin: 0;
+}
+
 /* Personal */
 
 .personal_header {

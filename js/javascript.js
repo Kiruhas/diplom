@@ -22,7 +22,7 @@ $('.add_product').on('click', function(){
     var color = $(this).parent().siblings('#product_color').data('attr');
     var img = $(this).parent().siblings('#product_img').data('attr');
     $.ajax({
-        url: "../blocks/addToCart.php",
+        url: "../blocks/ajax/addToCart.php",
         type: "post",
         data: {
             product_id: id,
@@ -49,6 +49,24 @@ $('.plus_prod').on('click', function(){
     if (value < 1000)
         $(this).prev('.product_amount').val(value + 1);
 })
+
+$('.delete_prod').on('click', function(){
+    var id = $(this).data('id');
+    var btn = $(this);
+    $.ajax({
+        url: "../blocks/ajax/deleteFromBasket.php",
+        type: "post",
+        data: {
+            product_id: id,
+            all_palets: $(".count_palets").text(),
+        }
+    }).done(function(result){
+        console.log(result);
+        $(".count_palets").text(result);
+        btn.before("<span>Удалено</span>");
+        btn.remove();
+    });
+});
 
 
 
