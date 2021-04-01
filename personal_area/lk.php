@@ -4,50 +4,19 @@
 <?php if ($_COOKIE['log'] == 'Да'): ?>
 <div class="container">
     <?php 
-        $query = pg_query_params($db_connection, 'SELECT * FROM users WHERE id = $1', array($_COOKIE['id']));
+        $query = pg_query_params($db_connection, 'SELECT * FROM users WHERE username = $1 AND "password" = $2', array($_COOKIE['username'], $_COOKIE['pass']));
         $res = pg_fetch_object($query);
+        if ($res -> isAdmin == false) header("Location: personal_area/lk_user.php");
     ?>
     <div class="personal">
         <div class="personal_header">
-            <div class="personal_header_name"><?php echo $res -> username ?></div>
-            <div class="personal_header_email"><?php echo $res -> email ?></div>
+            <div class="personal_header_name">Панель администратора</div>
+            <div class="personal_header_email"><?php echo $res -> username ?></div>
         </div>
-        <div class="personal_content">
-            <div class="personal_finance">
-                <div class="finance_sub">
-                    <div class="sub_content">
-                        <div class="sub_head">Подписка</div>
-                        <?php if (($res -> subscription) == 't'): ?>
-                            <div class="sub_timeout">истекает <?php echo $res -> subscription_date ?></div>
-                        <?php else: ?>
-                            <div class="sub_timeout">Не оплачено</div>
-                        <?php endif ?>
-                        <div class="sub_control">Управлять</div>
-                    </div>
-                </div>
-                <div class="finance_money">
-                    <div class="money_content">
-                        <div class="money_head">0 ₽</div>
-                        <div class="money_timeout">на счете</div>
-                        <div class="money_control">Пополнить</div>
-                    </div>
-                </div>
-            </div>
-            <div class="personal_back">
-                <div class="back_changepass">
-                    <img src="../images/Change_pass.png" alt="">
-                    <div class="back_change_name">
-                        <a href="" class="back_change_word">Сменить пароль</a>
-                    </div> 
-                </div>
-                <div class="back_out">
-                    <img src="../images/login.png" alt="">
-                    <div class="back_out_name">
-                        <a href="auth_exit.php" class="back_out_word">Выйти</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    </div>
+    <div> 
+        <a class="button_style nav_btn" href="/personal_area/active_orders.php">Все заказы</a>
+        <a class="button_style nav_btn">Состояние палетов</a>
     </div>
 </div>
 <?php else: ?>

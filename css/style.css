@@ -413,3 +413,13 @@ input::-webkit-inner-spin-button {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+/* Basket */
+
+.basket_buttons {
+    display: flex;
+}
+
+.order_basket {
+    margin-left: 40px;
+}

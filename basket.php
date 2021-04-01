@@ -62,10 +62,19 @@ if ($products) {
                 Корзина пуста
             <? endif; ?>
         </div>
-        <form type="post" action="/basket.php">
-            <input hidden name="clear" value="true">
-            <button class="clear_basket button_style nav_btn" type="submit">Очистить корзину</button>
-        </form>
+        <div class="basket_buttons">
+            <form type="post" action="/basket.php">
+                <input hidden name="clear" value="true">
+                <button class="clear_basket button_style nav_btn" type="submit">Очистить корзину</button>
+            </form>
+            <? if ($products): ?>
+                <form type="post" action="/blocks/confirmOrder.php">
+                    <input hidden name="complete" value="true">
+                    <button class="order_basket button_style nav_btn" type="submit">Оформить заказ</button>
+                </form>
+            <? endif ?>
+        </div>
+        
     </div>
 </div>
 

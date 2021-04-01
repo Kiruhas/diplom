@@ -19,6 +19,6 @@ function checkFill ($product_size, $product_count, $palet_size, $palets_amount) 
         while ($percentFill % $product[2]) { // Пока процент не делится на высоту без остатка
             $percentFill += 1;
         }
-        return [$percentFill, $palets_amount]; // Возвращаем [процент заполнения последнего палета, количество палетов]
+        return [$percentFill, $palets_amount, $product_count]; // Возвращаем [процент заполнения последнего палета, количество палетов]
     }
 }
