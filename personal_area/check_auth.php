@@ -23,9 +23,9 @@
     }
     
     if ($res){
-        setcookie('log', 'Да', time() + 3600, '/');
-        setcookie('username', $res -> username, time() + 3600, '/');
-        setcookie('pass', $res -> password, time() + 3600, '/');
+        setcookie('log', 'Да', time() + 15000, '/');
+        setcookie('username', $res -> username, time() + 15000, '/');
+        setcookie('pass', $res -> password, time() + 15000, '/');
         setcookie('error_lk', 'no', -1, '/');
         unset($_COOKIE['error_lk']);
         header('Location: /personal_area/lk.php');

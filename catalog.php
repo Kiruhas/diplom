@@ -6,7 +6,7 @@
 <?php require_once "blocks/header.php" ?>
 <?php require_once "blocks/databaseConnect.php" ?>
 <?php 
-    $query_text = 'SELECT * FROM "products" ';
+    $query_text = 'SELECT * FROM "products" ORDER BY id';
     $query = pg_query($db_connection, $query_text);
     
 ?>
@@ -28,10 +28,11 @@
                 <div class="product_name" id="product_name" data-attr="<?php echo $res -> name ?>"><?php echo $res -> name ?></div>
                 <div class="product_har" id="product_size" data-attr="<?php echo $res -> size ?>">Размер: <?php echo $res -> size ?></div>
                 <div class="product_har" id="product_color" data-attr="<?php echo $res -> color ?>">Цвет: <?php echo $res -> color ?></div>
+                <div class="product_har" id="product_weight" data-attr="<?php echo $res -> weight ?>">Вес одной единицы: <?php echo $res -> weight ?> гр.</div>
                 <div class="product_har">Минимальная партия: <?php echo $res -> amount ?></div>
                 <div class="amount">
                     <input type="button" value="-" class="minus_prod nav_btn">
-                    <input class="product_amount" type="number" min="<?php echo $res -> amount ?>" max="1000" onKeyUp="if(this.value>1000){this.value='1000';}else if(this.value<<?php echo $res -> amount ?>){this.value='<?php echo $res -> amount ?>';}" value="<?php echo $res -> amount ?>"></input>
+                    <input class="product_amount" type="number" min="<?php echo $res -> amount ?>" max="3000" onKeyUp="if(this.value>3000){this.value='3000';}else if(this.value<<?php echo $res -> amount ?>){this.value='<?php echo $res -> amount ?>';}" value="<?php echo $res -> amount ?>"></input>
                     <input type="button" value="+" class="plus_prod nav_btn">
                 </div>
                 <div class="product_button">

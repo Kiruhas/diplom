@@ -12,21 +12,13 @@ $palets = 0;
 
 
 if ($products) {
-    $revenue = 100;
-    foreach ($products as $key => $product) {
-        $query_text = "SELECT size FROM sizes WHERE product_id=$key";
-        $query = pg_query($db_connection, $query_text);
-        $res = pg_fetch_object($query);
-
-        $products[$key]['size'] = $res->size;
-        $prod = checkFill($products[$key]['size'], $products[$key]["amount"], "100x100x$revenue", 0);
-        $products[$key]['palets'] = $prod[1];
-        $palets += $prod[1];
-        $revenue = 100 - $prod[0];
-        pg_free_result($query);
-    }
     setcookie('products', serialize($products), time() + 3600, '/');
-    setcookie('palets', $palets, time() + 3600, '/');
+
+    $query_text = "SELECT * FROM borders ORDER BY id";
+    $query = pg_query($db_connection, $query_text);
+    while ($res = pg_fetch_object($query)) {
+        $borders[$res->id] = $res->title;
+    }
 }
 ?>
 
@@ -38,12 +30,13 @@ if ($products) {
         <div class="catalog_header">Корзина</div>
         <div class="basket_products">
             <? if ($products): ?>
-                <table>
+                <table class="orders_table" border=1 cellpadding=10>
                     <tr>
                         <td>Наименование</td>
                         <td>Размер</td>
                         <td>Цвет</td>
                         <td>Количество</td>
+                        <td>Удалить</td>
                     </tr>
                     <? foreach ($products as $key=>$product) :?>
                         <tr>
@@ -57,24 +50,29 @@ if ($products) {
                         </tr>
                     <? endforeach; ?>
                 </table>
-                <div>Количество используемых палетов для доставки: <span class="count_palets"><?= $palets ?></span></div>
-            <? else: ?>
-                Корзина пуста
-            <? endif; ?>
-        </div>
-        <div class="basket_buttons">
-            <form type="post" action="/basket.php">
-                <input hidden name="clear" value="true">
-                <button class="clear_basket button_style nav_btn" type="submit">Очистить корзину</button>
-            </form>
-            <? if ($products): ?>
-                <form type="post" action="/blocks/confirmOrder.php">
-                    <input hidden name="complete" value="true">
-                    <button class="order_basket button_style nav_btn" type="submit">Оформить заказ</button>
+                <!-- <div>Количество используемых палетов для доставки: <span class="count_palets"><?= $palets ?></span></div> -->
+                <div>
+                    <form type="post" action="/blocks/confirmOrder.php">
+                        <input hidden name="complete" value="true">
+                        <span>Выберите обрешётку палета: </span>
+                        <select name=border>
+                            <? foreach ($borders as $key=>$title) :?>
+                                <option value="<?=$key?>"><?=$title?></option>
+                            <? endforeach; ?>
+                        </select>
+                        <button class="order_basket button_style nav_btn" type="submit">Оформить заказ</button>
+                    </form>
+                </div>
+                <form type="post" action="/basket.php">
+                    <input hidden name="clear" value="true">
+                    <button class="clear_basket button_style nav_btn" type="submit">Очистить корзину</button>
                 </form>
-            <? endif ?>
+            </div>
+                <? else: ?>
+                    Корзина пуста
+                <? endif; ?>
+            </div>
         </div>
-        
     </div>
 </div>
 

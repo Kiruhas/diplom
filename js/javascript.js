@@ -20,6 +20,7 @@ $('.add_product').on('click', function(){
     var name = $(this).parent().siblings('#product_name').data('attr');
     var size = $(this).parent().siblings('#product_size').data('attr');
     var color = $(this).parent().siblings('#product_color').data('attr');
+    var weight = $(this).parent().siblings('#product_weight').data('attr');
     var img = $(this).parent().siblings('#product_img').data('attr');
     $.ajax({
         url: "../blocks/ajax/addToCart.php",
@@ -30,6 +31,7 @@ $('.add_product').on('click', function(){
             product_name: name,
             product_size: size,
             product_color: color,
+            product_weight: weight,
             product_img: img,
         }
     }).done(function(result){
@@ -61,11 +63,37 @@ $('.delete_prod').on('click', function(){
             all_palets: $(".count_palets").text(),
         }
     }).done(function(result){
-        console.log(result);
         $(".count_palets").text(result);
         btn.before("<span>Удалено</span>");
         btn.remove();
     });
+});
+
+$('.end_order').on('click', function(){
+    var id = $(this).data('id');
+    var btn = $(this);
+    $.ajax({
+        url: "../blocks/ajax/endOrder.php",
+        type: "post",
+        data: {
+            order_id: id,
+        }
+    }).done(function(result){
+        console.log(result);
+        btn.before("<span>Завершен</span>");
+        btn.remove();
+    });
+});
+
+function scrollToElement(ele) {
+    $(window).scrollTop(ele.offset().top).scrollLeft(ele.offset().left);
+}
+
+$(document).ready(function () {
+    var $scroll_elem = $(".scroll");
+    if ($scroll_elem) {
+        scrollToElement($(".scroll"));
+    }
 });
 
 

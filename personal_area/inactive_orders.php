@@ -3,13 +3,11 @@
 
 <?php if ($_COOKIE['log'] == 'Да'): ?>
 <? 
-    $query = pg_query($db_connection, 'SELECT * FROM orders WHERE active=true ORDER BY id');
+    $query = pg_query($db_connection, 'SELECT * FROM orders WHERE active=false');
     while ($res = pg_fetch_object($query)) {
         $orders[$res->id] = unserialize($res->contain);
-        $orders_ready[$res->id] = $res->ready;
     }
     pg_free_result($query);
-
     $url = $_SERVER['REQUEST_URI'];
     $url = explode('?', $url);
     $url = $url[0];
@@ -26,7 +24,6 @@
             <div class="personal_header_email"> 
                 <a class="button_style nav_btn" <?= $url == "/personal_area/palets.php" ? 'href="/personal_area/active_orders.php"' : 'style="background-color: rgb(219, 29, 76)"' ?>>Все заказы</a>
                 <a class="button_style nav_btn" <?= $url !== "/personal_area/palets.php" ? 'href="/personal_area/palets.php"' : 'style="background-color: rgb(219, 29, 76)"' ?>>Состояние палетов</a>
-                
             </div>
             <div class="personal_header_email">
                 <a class="button_style nav_btn"
@@ -49,12 +46,10 @@
                 <td>Количество товара</td>
                 <td>Общий вес товара (кг)</td>
                 <td>Общий вес палета (кг)</td>
-                <td>Номера используемых палетов</td>
-                <td>Готовность к отправке</td>
-                <td>Завершить заказ</td>
+                <td>Номера использованных палетов</td>
             </tr>
             <? foreach ($orders as $id => $order):?>
-                <tr <?= $_GET['scroll']==$id ? 'class="scroll" style="background-color:rgb(189, 31, 70);"' : '' ?>>
+                <tr>
                     <td><?= $id ?></td>
                     <td>
                         <table>
@@ -119,16 +114,6 @@
                             }
                             ?>
                         </table>
-                    </td>
-                    <td>
-                        <?= $orders_ready[$id] == 'f' ? 'Не готов' : 'Готов' ?>
-                    </td>
-                    <td>
-                        <? if ($orders_ready[$id] !== 'f'): ?>
-                            <button class="end_order button_style nav_btn" data-id="<?= $id ?>">
-                                Завершить
-                            </button>
-                        <? endif; ?>
                     </td>
                 </tr>
             <? endforeach; ?>

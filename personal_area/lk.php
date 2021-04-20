@@ -10,13 +10,13 @@
     ?>
     <div class="personal">
         <div class="personal_header">
-            <div class="personal_header_name">Панель администратора</div>
-            <div class="personal_header_email"><?php echo $res -> username ?></div>
+            <div class="personal_header_name">Административная панель</div>
+            <div class="personal_header_email">Пользователь: <?php echo $res -> username ?></div>
         </div>
     </div>
-    <div> 
+    <div class="personal_header_email"> 
         <a class="button_style nav_btn" href="/personal_area/active_orders.php">Все заказы</a>
-        <a class="button_style nav_btn">Состояние палетов</a>
+        <a class="button_style nav_btn" href="/personal_area/palets.php">Состояние палетов</a>
     </div>
 </div>
 <?php else: ?>
