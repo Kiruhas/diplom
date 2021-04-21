@@ -34,13 +34,13 @@
             <div class="personal_header_name">Административная панель</div>
             <div class="personal_header_email"> 
                 <a class="button_style nav_btn" <?= $url == "/personal_area/palets.php" ? 'href="/personal_area/active_orders.php"' : 'style="background-color: rgb(219, 29, 76)"' ?>>Все заказы</a>
-                <a class="button_style nav_btn" <?= $url !== "/personal_area/palets.php" ? 'href="/personal_area/palets.php"' : 'style="background-color: rgb(219, 29, 76)"' ?>>Состояние палетов</a>
+                <a class="button_style nav_btn" <?= $url !== "/personal_area/palets.php" ? 'href="/personal_area/palets.php"' : 'style="background-color: rgb(219, 29, 76)"' ?>>Состояние поддонов</a>
             </div>
         </div>
     </div>
     <table class="orders_table" border=1 cellpadding=10>
         <tr>
-            <td>Номер палета</td>
+            <td>Номер поддона</td>
             <td>Свободен</td>
             <td>Номер заказа</td>
             <td>Окантовка</td>

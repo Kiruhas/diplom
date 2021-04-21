@@ -3,11 +3,13 @@
 
 <?php if ($_COOKIE['log'] == 'Да'): ?>
 <? 
-    $query = pg_query($db_connection, 'SELECT * FROM orders WHERE active=false');
+    $query = pg_query($db_connection, 'SELECT * FROM orders WHERE active=true AND agreed=false ORDER BY id');
     while ($res = pg_fetch_object($query)) {
         $orders[$res->id] = unserialize($res->contain);
+        $orders_ready[$res->id] = $res->ready;
     }
     pg_free_result($query);
+
     $url = $_SERVER['REQUEST_URI'];
     $url = explode('?', $url);
     $url = $url[0];
@@ -17,6 +19,7 @@
         $query = pg_query_params($db_connection, 'SELECT * FROM users WHERE username = $1 AND "password" = $2', array($_COOKIE['username'], $_COOKIE['pass']));
         $res = pg_fetch_object($query);
         if ($res -> isAdmin == false) header("Location: personal_area/lk_user.php");
+        pg_free_result($query);
     ?>
     <div class="personal">
         <div class="personal_header">
@@ -24,6 +27,7 @@
             <div class="personal_header_email"> 
                 <a class="button_style nav_btn" <?= $url == "/personal_area/palets.php" ? 'href="/personal_area/active_orders.php"' : 'style="background-color: rgb(219, 29, 76)"' ?>>Все заказы</a>
                 <a class="button_style nav_btn" <?= $url !== "/personal_area/palets.php" ? 'href="/personal_area/palets.php"' : 'style="background-color: rgb(219, 29, 76)"' ?>>Состояние поддонов</a>
+                
             </div>
             <div class="personal_header_email">
                 <a class="button_style nav_btn"
@@ -45,10 +49,18 @@
                 <td>Вес единицы товара (гр)</td>
                 <td>Количество товара</td>
                 <td>Общий вес товара (кг)</td>
-                <td>Номера использованных поддонов</td>
+                <td>Обрешетка</td>
+                <td>Подтвердить заказ</td>
             </tr>
             <? foreach ($orders as $id => $order):?>
-                <tr>
+            <?
+                $border_id = (int)$orders[$id]['border'];
+                $query = pg_query($db_connection, "SELECT * FROM borders WHERE id=$border_id");
+                $res = pg_fetch_object($query);
+                $border_title = $res->title;
+                pg_free_result($query);
+                ?>
+                <tr <?= $_GET['scroll']==$id ? 'class="scroll" style="background-color:rgb(189, 31, 70);"' : '' ?>>
                     <td><?= $id ?></td>
                     <td>
                         <table>
@@ -101,15 +113,12 @@
                         </table>
                     </td>
                     <td>
-                        <table>
-                            <? foreach ($order['products'] as $product) {
-                                if (is_array($product['id_palet']))
-                                    echo '<tr><td>' . implode(', ', $product['id_palet']) . '</td></tr>';
-                                else
-                                    echo '<tr><td>' . $product['id_palet'] . '</td></tr>';
-                            }
-                            ?>
-                        </table>
+                        <?= $border_title ?>
+                    </td>
+                    <td>
+                        <button class="confirm_order button_style nav_btn" data-id="<?= $id ?>">
+                            Подтвердить
+                        </button>
                     </td>
                 </tr>
             <? endforeach; ?>

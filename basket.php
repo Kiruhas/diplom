@@ -52,7 +52,7 @@ if ($products) {
                 </table>
                 <!-- <div>Количество используемых палетов для доставки: <span class="count_palets"><?= $palets ?></span></div> -->
                 <div>
-                    <form type="post" action="/blocks/confirmOrder.php">
+                    <form type="post" action="/blocks/confirmOrderUser.php">
                         <input hidden name="complete" value="true">
                         <span>Выберите обрешётку палета: </span>
                         <select name=border>

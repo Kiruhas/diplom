@@ -3,7 +3,7 @@
 
 <?php if ($_COOKIE['log'] == 'Да'): ?>
 <? 
-    $query = pg_query($db_connection, 'SELECT * FROM orders WHERE active=true ORDER BY id');
+    $query = pg_query($db_connection, 'SELECT * FROM orders WHERE active=true AND agreed=true ORDER BY id');
     while ($res = pg_fetch_object($query)) {
         $orders[$res->id] = unserialize($res->contain);
         $orders_ready[$res->id] = $res->ready;
@@ -25,16 +25,16 @@
             <div class="personal_header_name">Административная панель</div>
             <div class="personal_header_email"> 
                 <a class="button_style nav_btn" <?= $url == "/personal_area/palets.php" ? 'href="/personal_area/active_orders.php"' : 'style="background-color: rgb(219, 29, 76)"' ?>>Все заказы</a>
-                <a class="button_style nav_btn" <?= $url !== "/personal_area/palets.php" ? 'href="/personal_area/palets.php"' : 'style="background-color: rgb(219, 29, 76)"' ?>>Состояние палетов</a>
+                <a class="button_style nav_btn" <?= $url !== "/personal_area/palets.php" ? 'href="/personal_area/palets.php"' : 'style="background-color: rgb(219, 29, 76)"' ?>>Состояние поддонов</a>
                 
             </div>
             <div class="personal_header_email">
                 <a class="button_style nav_btn"
-                    <?= $url !== "/personal_area/active_orders.php" ? 'href="/personal_area/active_orders.php"' : 'style="background-color: rgb(219, 29, 76)"' ?>>Активные заказы</a>
+                    <?= $url == "/personal_area/active_orders.php" ? 'style="background-color: rgb(219, 29, 76)"' : 'href="/personal_area/active_orders.php"'?>>Активные заказы</a>
                 <a class="button_style nav_btn" 
-                    <?= $url !== "/personal_area/inactive_orders.php" ? 'href="/personal_area/inactive_orders.php"' : 'style="background-color: rgb(219, 29, 76)"' ?>>Завершенные заказы</a>
+                    <?= $url == "/personal_area/inactive_orders.php" ? 'style="background-color: rgb(219, 29, 76)"' : 'href="/personal_area/inactive_orders.php"' ?>>Завершенные заказы</a>
                 <a class="button_style nav_btn" 
-                    >Требующие подтверждения заказы</a>
+                    <?= $url == "/personal_area/not_agreed_orders.php" ? 'style="background-color: rgb(219, 29, 76)"' : 'href="/personal_area/not_agreed_orders.php"' ?>>Требующие подтверждения заказы</a>
             </div>
         </div>
     </div>
@@ -48,8 +48,7 @@
                 <td>Вес единицы товара (гр)</td>
                 <td>Количество товара</td>
                 <td>Общий вес товара (кг)</td>
-                <td>Общий вес палета (кг)</td>
-                <td>Номера используемых палетов</td>
+                <td>Номера используемых поддонов</td>
                 <td>Готовность к отправке</td>
                 <td>Завершить заказ</td>
             </tr>
@@ -105,9 +104,6 @@
                             }
                             ?>
                         </table>
-                    </td>
-                    <td>
-                        <?= $all_weight ?>
                     </td>
                     <td>
                         <table>

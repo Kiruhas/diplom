@@ -16,7 +16,7 @@
     </div>
     <div class="personal_header_email"> 
         <a class="button_style nav_btn" href="/personal_area/active_orders.php">Все заказы</a>
-        <a class="button_style nav_btn" href="/personal_area/palets.php">Состояние палетов</a>
+        <a class="button_style nav_btn" href="/personal_area/palets.php">Состояние поддонов</a>
     </div>
 </div>
 <?php else: ?>

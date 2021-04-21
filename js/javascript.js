@@ -79,8 +79,23 @@ $('.end_order').on('click', function(){
             order_id: id,
         }
     }).done(function(result){
-        console.log(result);
         btn.before("<span>Завершен</span>");
+        btn.remove();
+    });
+});
+
+$('.confirm_order').on('click', function(){
+    var id = $(this).data('id');
+    var btn = $(this);
+    $.ajax({
+        url: "../blocks/ajax/confirmOrder.php",
+        type: "post",
+        data: {
+            order_id: id,
+        }
+    }).done(function(result){
+        console.log(result);
+        btn.before("<span>Подтвержден</span>");
         btn.remove();
     });
 });
