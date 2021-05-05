@@ -8,14 +8,8 @@ pg_free_result($query);
 
 $products = unserialize($_COOKIE['products']);
 
-$query_text = 'SELECT id FROM "palets" WHERE free=true ORDER BY id';
-$query = pg_query($db_connection, $query_text);
-while ($res = pg_fetch_object($query)) {
-    $paletsFree[] = $res->id;
-}
-pg_free_result($query);
-
 $border_id = $_GET['border'];
+$palet_size = $_GET['palet_size'];
 
 if ($products) {
     foreach ($products as $key => $product) {
@@ -26,6 +20,7 @@ if ($products) {
         pg_free_result($query);
     }
     $contain['border'] = $border_id;
+    $contain['palet_size'] = $palet_size;
     $contain['products'] =  $products;
     $contain = serialize($contain);
     

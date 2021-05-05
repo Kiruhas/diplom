@@ -10,12 +10,14 @@
         <div class="header_inner">
             <div class="header_logo">
                 <ul class="logo_categories">
-                    <li class="header_menu_item <?= in_array($url, $order_pages) ? 'header_item_active' : '' ?>">
-                        <a <?= in_array($url, $order_pages) ? '' : 'href="/personal_area/active_orders.php"' ?>>Управление заказами</a>
-                    </li>
-                    <li class="header_menu_item <?= $url=="/personal_area/palets.php" ? 'header_item_active' : '' ?>">
-                        <a <?= $url=="/personal_area/palets.php" ? '' : 'href="/personal_area/palets.php"' ?>>Состояние поддонов</a>
-                    </li>
+                    <?php if ($_COOKIE['log'] == 'Да'): ?>
+                        <li class="header_menu_item <?= in_array($url, $order_pages) ? 'header_item_active' : '' ?>">
+                            <a <?= in_array($url, $order_pages) ? '' : 'href="/personal_area/active_orders.php"' ?>>Управление заказами</a>
+                        </li>
+                        <li class="header_menu_item <?= $url=="/personal_area/palets.php" ? 'header_item_active' : '' ?>">
+                            <a <?= $url=="/personal_area/palets.php" ? '' : 'href="/personal_area/palets.php"' ?>>Состояние поддонов</a>
+                        </li>
+                    <? endif; ?>
                     <li class="header_menu_item <?= $url=="/catalog.php" ? 'header_item_active' : '' ?>">
                         <a <?= $url=="/catalog.php" ? '' : 'href="/catalog.php"' ?>>Каталог</a>
                     </li>

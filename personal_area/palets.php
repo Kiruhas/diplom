@@ -6,6 +6,7 @@
     $query = pg_query($db_connection, 'SELECT * FROM palets ORDER BY id');
     while ($res = pg_fetch_object($query)) {
         $palets[$res->id]['free'] = $res->free;
+        $palets[$res->id]['palet_size'] = $res->palet_size;
         if ($res->free == 'f') {
             $palets[$res->id]['order_id'] = $res->order_id;
             $palets[$res->id]['border_id'] = $res->border_id;
@@ -30,6 +31,7 @@
             <thead>
                 <tr>
                     <th>Номер поддона</th>
+                    <th>Размер поддона (ДхШхВ, см)</th>
                     <th>Свободен</th>
                     <th>Номер заказа</th>
                     <th>Окантовка</th>
@@ -39,6 +41,7 @@
             <? foreach ($palets as $id => $palet):?>
                 <tr class="row_inside">
                     <td><?= $id ?></td>
+                    <td><?= $palet['palet_size'] ?></td>
                     <td>
                         <?= $palet['free'] == 't' ? 'Да' : 'Нет'?>
                     </td>

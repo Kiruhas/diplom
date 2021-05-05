@@ -15,6 +15,19 @@
         'Черный' => 'BL',
         'Зеленый' => 'GR',
     ];
+
+    $query = pg_query($db_connection, 'SELECT * FROM palets ORDER BY id');
+    while ($res = pg_fetch_object($query)) {
+        $palets[$res->id]['size'] = $res->palet_size;
+        $palets[$res->id]['border'] = $res->border_id;
+    }
+    pg_free_result($query);
+
+    $query = pg_query($db_connection, 'SELECT * FROM borders ORDER BY id');
+    while ($res = pg_fetch_object($query)) {
+        $borders[$res->id] = $res->title;
+    }
+    pg_free_result($query);
 ?>
 <div class="container">
     <?php 
@@ -106,10 +119,15 @@
                     <td>
                         <table style="width:100%">
                             <? foreach ($order['products'] as $product) {
-                                if (is_array($product['id_palet']))
-                                    echo '<tr><td>' . implode(', ', $product['id_palet']) . '</td></tr>';
+                                if (is_array($product['id_palet'])) {
+                                    echo '<tr><td>';
+                                    foreach ($product['id_palet'] as $palet) {
+                                        echo '<span id="i-have-a-tooltip" data-description="Размер:' . $palets[$palet]['size'] . ' Обрешетка:' . $borders[$palets[$palet]['border']] .'">' . $palet . '</span>' . '<br/>';
+                                    }
+                                    echo '</td></tr>';
+                                }
                                 else
-                                    echo '<tr><td>' . $product['id_palet'] . '</td></tr>';
+                                    echo '<tr><td><span id="i-have-a-tooltip" data-description="Размер:' . $palets[$product['id_palet']]['size'] . ' Обрешетка:' . $borders[$palets[$product['id_palet']]['border']] .'">' . $product['id_palet'] . '</span></td></tr>';
                             }
                             ?>
                         </table>
@@ -118,7 +136,7 @@
                         <?= $orders_ready[$id] == 'f' ? 'Не готов' : 'Готов' ?>
                     </td>
                     <td>
-                        <? if ($orders_ready[$id] !== 'f'): ?>
+                         <? if ($orders_ready[$id] == 'f'): ?>  <!-- ПОМЕНЯТЬ НА !== -->
                             <button class="end_order button_style nav_btn" data-id="<?= $id ?>">
                                 Завершить
                             </button>

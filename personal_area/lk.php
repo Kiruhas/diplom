@@ -10,17 +10,20 @@
     ?>
     <div class="personal">
         <div class="personal_header">
-            <div class="personal_header_name">Административная панель</div>
-            <div class="personal_header_email">Пользователь: <?php echo $res -> username ?></div>
+            <div class="personal_header_name">Личный кабинет</div>
+            <div class="personal_header_email">Имя пользователя: <?php echo $res -> username ?></div>
+            <div class="personal_header_email">Права администратора: <?php echo $res -> isAdmin !== 'f' ? 'да' : 'нет' ?></div>
         </div>
     </div>
     <div class="personal_header_email"> 
-        <a class="button_style nav_btn" href="/personal_area/active_orders.php">Все заказы</a>
+        <a class="button_style nav_btn" href="/personal_area/active_orders.php">Просмотр заказов</a>
         <a class="button_style nav_btn" href="/personal_area/palets.php">Состояние поддонов</a>
+        <a class="button_style nav_btn" href="/personal_area/auth_exit.php">Выйти</a>
     </div>
 </div>
 <?php else: ?>
 <div class="container"> 
+    <div class="module_name">PICK-BY-LINE</div>
     <div class="input_data">
             <?php if ($_GET['er_auth'] == 'wrlog'): ?>
                 <div class="lk_error" id="lk_error_auth">Введите логин!</div>
@@ -29,13 +32,30 @@
             <?php elseif ($_GET['er_auth'] == 'wruser'): ?>
                 <div class="lk_error" id="lk_error_auth">Неверный логин или пароль!</div>
             <?php endif ?>
-        <div class="authorizate_form" id="auth_form">
+        <!-- <div class="authorizate_form" id="auth_form">
             <div class="auth_form">
                 <form action="check_auth.php" method="post" class="add_form">
                 <input type="text" name="login" class="add_form_input" placeholder="Введите логин" value="<?= $_GET['name'] ?? ''?>">
                 <input type="text" name="password" class="add_form_input" placeholder="Введите пароль">              
                 <button type="submit" name="btn" class="add_form_submit">Вход</button>
             </form>
+            </div>
+        </div> -->
+        <div class="login-page"  id="auth_form">
+            <div class="form">
+                <!-- <form class="register-form">
+                <input type="text" placeholder="name"/>
+                <input type="password" placeholder="password"/>
+                <input type="text" placeholder="email address"/>
+                <button>create</button>
+                <p class="message">Already registered? <a href="#">Sign In</a></p>
+                </form> -->
+                <form class="login-form" action="check_auth.php" method="post">
+                    <input type="text" name="login" placeholder="Введите логин" value="<?= $_GET['name'] ?? ''?>"/>
+                    <input type="password" name="password" placeholder="Введите пароль"/>
+                    <button>Войти</button>
+                    <!-- <p class="message">Not registered? <a href="#">Create an account</a></p> -->
+                </form>
             </div>
         </div>
     </div>

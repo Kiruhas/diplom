@@ -7,10 +7,11 @@ $query = pg_query($db_connection, "SELECT * FROM orders WHERE id=$order_id");
 while ($res = pg_fetch_object($query)) {
     $products = unserialize($res->contain)['products'];
     $border_id = unserialize($res->contain)['border'];
+    $palet_size = unserialize($res->contain)['palet_size'];
 }
 pg_free_result($query);
 
-$query_text = 'SELECT id FROM "palets" WHERE free=true ORDER BY id';
+$query_text = "SELECT id FROM palets WHERE free=true AND palet_size='$palet_size' ORDER BY id";
 $query = pg_query($db_connection, $query_text);
 while ($res = pg_fetch_object($query)) {
     $paletsFree[] = $res->id;
@@ -25,7 +26,7 @@ pg_free_result($query);
 
 $palets = 0;
 $counter = 0;
-$revenue = 100-$border_size;
+$revenue = explode('x', $palet_size)[0]-$border_size;
 $revenue_border = $revenue;
 
 if ($products) {
@@ -85,6 +86,8 @@ if ($products) {
         }   
     }
 
+    $contain['border'] = $border_id;
+    $contain['palet_size'] = $palet_size;
     $contain['products'] =  $products;
     $contain = serialize($contain);
 
