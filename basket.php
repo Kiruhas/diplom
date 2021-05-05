@@ -30,26 +30,32 @@ if ($products) {
         <div class="catalog_header">Корзина</div>
         <div class="basket_products">
             <? if ($products): ?>
-                <table class="orders_table" border=1 cellpadding=10>
-                    <tr>
-                        <td>Наименование</td>
-                        <td>Размер</td>
-                        <td>Цвет</td>
-                        <td>Количество</td>
-                        <td>Удалить</td>
-                    </tr>
-                    <? foreach ($products as $key=>$product) :?>
-                        <tr>
-                            <td><?= $product['name']?></td>
-                            <td><?= $product['size']?></td>
-                            <td><?= $product['color']?></td>
-                            <td><?= $product['amount']?></td>
-                            <td>
-                                <button class="delete_prod button_style nav_btn" data-id="<?=$key?>">X</button>
-                            </td>
-                        </tr>
-                    <? endforeach; ?>
-                </table>
+                <div class="orders_table_wrapper">
+                    <table class="orders_table">
+                        <thead>
+                            <tr>
+                                <th>Наименование</th>
+                                <th>Размер</th>
+                                <th>Цвет</th>
+                                <th>Количество</th>
+                                <th>Удалить</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <? foreach ($products as $key=>$product) :?>
+                                <tr class="row_inside">
+                                    <td><?= $product['name']?></td>
+                                    <td><?= $product['size']?></td>
+                                    <td><?= $product['color']?></td>
+                                    <td><?= $product['amount']?></td>
+                                    <td>
+                                        <button class="delete_prod button_style nav_btn" data-id="<?=$key?>">X</button>
+                                    </td>
+                                </tr>
+                            <? endforeach; ?>
+                        </tbody>        
+                    </table>
+                </div>
                 <!-- <div>Количество используемых палетов для доставки: <span class="count_palets"><?= $palets ?></span></div> -->
                 <div>
                     <form type="post" action="/blocks/confirmOrderUser.php">

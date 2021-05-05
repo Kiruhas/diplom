@@ -18,10 +18,6 @@
         $borders[$res->id] = $res->title;
     }
     pg_free_result($query);
-
-    $url = $_SERVER['REQUEST_URI'];
-    $url = explode('?', $url);
-    $url = $url[0];
 ?>
 <div class="container">
     <?php 
@@ -29,37 +25,34 @@
         $res = pg_fetch_object($query);
         if ($res -> isAdmin == false) header("Location: personal_area/lk_user.php");
     ?>
-    <div class="personal">
-        <div class="personal_header">
-            <div class="personal_header_name">Административная панель</div>
-            <div class="personal_header_email"> 
-                <a class="button_style nav_btn" <?= $url == "/personal_area/palets.php" ? 'href="/personal_area/active_orders.php"' : 'style="background-color: rgb(219, 29, 76)"' ?>>Все заказы</a>
-                <a class="button_style nav_btn" <?= $url !== "/personal_area/palets.php" ? 'href="/personal_area/palets.php"' : 'style="background-color: rgb(219, 29, 76)"' ?>>Состояние поддонов</a>
-            </div>
-        </div>
+    <div class="orders_table_wrapper">
+        <table class="orders_table">
+            <thead>
+                <tr>
+                    <th>Номер поддона</th>
+                    <th>Свободен</th>
+                    <th>Номер заказа</th>
+                    <th>Окантовка</th>
+                </tr>
+            </thead>
+            <tbody>
+            <? foreach ($palets as $id => $palet):?>
+                <tr class="row_inside">
+                    <td><?= $id ?></td>
+                    <td>
+                        <?= $palet['free'] == 't' ? 'Да' : 'Нет'?>
+                    </td>
+                    <td>
+                        <?= $palet['order_id'] ? '<a class="button_style nav_btn" href="/personal_area/active_orders.php?scroll=' . $palet['order_id'] . '">' . $palet['order_id'] . '</a>' : ''?>
+                    </td>
+                    <td>
+                        <?= $palet['border_id'] ? $borders[$palet['border_id']] : ''?>
+                    </td>
+                </tr>
+            <? endforeach; ?>
+            </tbody>
+        </table>
     </div>
-    <table class="orders_table" border=1 cellpadding=10>
-        <tr>
-            <td>Номер поддона</td>
-            <td>Свободен</td>
-            <td>Номер заказа</td>
-            <td>Окантовка</td>
-        </tr>
-        <? foreach ($palets as $id => $palet):?>
-            <tr>
-                <td><?= $id ?></td>
-                <td>
-                    <?= $palet['free'] == 't' ? 'Да' : 'Нет'?>
-                </td>
-                <td>
-                    <?= $palet['order_id'] ? '<a class="button_style nav_btn" href="/personal_area/active_orders.php?scroll=' . $palet['order_id'] . '">' . $palet['order_id'] . '</a>' : ''?>
-                </td>
-                <td>
-                    <?= $palet['border_id'] ? $borders[$palet['border_id']] : ''?>
-                </td>
-            </tr>
-        <? endforeach; ?>
-    </table>
 </div>
 
 <?
