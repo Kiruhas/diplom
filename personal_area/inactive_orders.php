@@ -32,14 +32,18 @@
     <?php 
         $query = pg_query_params($db_connection, 'SELECT * FROM users WHERE username = $1 AND "password" = $2', array($_COOKIE['username'], $_COOKIE['pass']));
         $res = pg_fetch_object($query);
-        if ($res -> isAdmin == false) header("Location: personal_area/lk_user.php");
+        $dolzhn_active = $res -> staff;
+        if (!$dolzhn_active == 'manager' || !$dolzhn_active == 'admin') header("Location: personal_area/lk_user.php");
     ?>
     <div class="personal">
         <div class="personal_header">
             <div class="personal_header_email">
                 <a class="button_style nav_btn" href="/personal_area/active_orders.php">Активные заказы</a>
-                <a class="button_style nav_btn" style="background-color: rgba(28, 119, 20, 0.871); color:#fff;">Завершенные заказы</a>
-                <a class="button_style nav_btn" href="/personal_area/not_agreed_orders.php">Требующие подтверждения заказы</a></div>
+                <? if ($dolzhn_active == 'admin' || $dolzhn_active == 'manager'): ?>
+                    <a class="button_style nav_btn" style="background-color: rgba(28, 119, 20, 0.871); color:#fff;">Завершенные заказы</a>
+                    <a class="button_style nav_btn" href="/personal_area/not_agreed_orders.php">Требующие подтверждения заказы</a>
+                <? endif; ?>
+            </div>
         </div>
     </div>
     <? if ($orders): ?>

@@ -1,18 +1,26 @@
 <?php require "../blocks/html_structure_open.php" ?>
 <?php require "../blocks/header.php" ?>
+<?
+$dolzhn = [
+    'admin' => 'Администратор',
+    'manager' => 'Менеджер',
+    'storekeeper' => 'Кладовщик',
+];
+?>
 
 <?php if ($_COOKIE['log'] == 'Да'): ?>
 <div class="container">
     <?php 
         $query = pg_query_params($db_connection, 'SELECT * FROM users WHERE username = $1 AND "password" = $2', array($_COOKIE['username'], $_COOKIE['pass']));
         $res = pg_fetch_object($query);
-        if ($res -> isAdmin == false) header("Location: personal_area/lk_user.php");
+        $dolzhn_active = $res -> staff;
+        if (!$dolzhn_active == 'manager' || !$dolzhn_active == 'admin' || !$dolzhn_active == 'storekeeper') header("Location: personal_area/lk_user.php");
     ?>
     <div class="personal">
         <div class="personal_header">
             <div class="personal_header_name">Личный кабинет</div>
             <div class="personal_header_email">Имя пользователя: <?php echo $res -> username ?></div>
-            <div class="personal_header_email">Права администратора: <?php echo $res -> isAdmin !== 'f' ? 'да' : 'нет' ?></div>
+            <div class="personal_header_email">Должность: <?php echo $dolzhn[$res -> staff] ?></div>
         </div>
     </div>
     <div class="personal_header_email"> 

@@ -111,6 +111,24 @@ $(document).ready(function () {
     }
 });
 
+$('.confirm_palet').on('click', function(){
+    var id = $(this).data('id');
+    var order = $(this).data('order');
+    var btn = $(this);
+    $.ajax({
+        url: "../blocks/ajax/confirmPalet.php",
+        type: "post",
+        data: {
+            palet_id: id,
+            order_id: order,
+        }
+    }).done(function(result){
+        console.log(result);
+        btn.before("<span>Подтвержден</span>");
+        btn.remove();
+    });
+});
+
 
 
 

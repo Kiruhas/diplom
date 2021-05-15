@@ -1,9 +1,10 @@
 <?php require "../blocks/html_structure_open.php" ?>
 <?php require "../blocks/header.php" ?>
 
-<?php if ($_COOKIE['log'] == 'Да'): ?>
+<?php if ($_COOKIE['log'] == 'Да' && $_GET['id']): ?>
 <? 
-    $query = pg_query($db_connection, 'SELECT * FROM orders WHERE active=true AND agreed=true ORDER BY id');
+    $order_id = $_GET['id'];
+    $query = pg_query($db_connection, "SELECT * FROM orders WHERE id=$order_id");
     while ($res = pg_fetch_object($query)) {
         $orders[$res->id] = unserialize($res->contain);
         $orders_ready[$res->id] = $res->ready;
@@ -30,45 +31,27 @@
     pg_free_result($query);
 ?>
 <div class="container">
-    <?php 
-        $query = pg_query_params($db_connection, 'SELECT * FROM users WHERE username = $1 AND "password" = $2', array($_COOKIE['username'], $_COOKIE['pass']));
-        $res = pg_fetch_object($query);
-        $dolzhn_active = $res -> staff;
-        if (!$dolzhn_active == 'manager' || !$dolzhn_active == 'admin' || !$dolzhn_active == 'storekeeper') header("Location: personal_area/lk_user.php");
-    ?>
-    
-    <div class="personal">
-        <div class="personal_header">
-            <div class="personal_header_email">
-                <a class="button_style nav_btn" style="background-color: rgba(28, 119, 20, 0.871); color:#fff;">Активные заказы</a>
-                <? if ($dolzhn_active == 'admin' || $dolzhn_active == 'manager'): ?>
-                    <a class="button_style nav_btn" href="/personal_area/inactive_orders.php">Завершенные заказы</a>
-                    <a class="button_style nav_btn" href="/personal_area/not_agreed_orders.php">Требующие подтверждения заказы</a>
-                <? endif; ?>
-            </div>
-        </div>
-    </div>
-    <? if ($orders): ?>
-        <div class="orders_table_wrapper">
+
+    <div class="orders_table_wrapper">
         <table class="orders_table">
             <thead>
                 <tr>
                     <th>Номер заказа</th>
-                    <th>Готовность к отправке</th>
                     <th>Содержимое</th>
                     <th>Артикул</th>
+                    <th>Размер единицы товара (ДхШхВ, см)</th>
+                    <th>Вес единицы товара (гр)</th>
                     <th>Количество товара</th>
+                    <th>Общий вес товара (кг)</th>
                     <th>Номера используемых поддонов</th>
+                    <th>Готовность к отправке</th>
                     <th>Завершить заказ</th>
                 </tr>
             </thead>
             <tbody>
             <? foreach ($orders as $id => $order):?>
                 <tr class="row_inside <?= $_GET['scroll']==$id ? 'scroll' : '' ?>" >
-                    <td><a href="/personal_area/order_detail.php?id=<?=$id?>"><?=$id?></a></td>
-                    <td>
-                        <?= $orders_ready[$id] == 'f' ? 'Не готов' : 'Готов' ?>
-                    </td>
+                    <td><?= $id ?></td>
                     <td>
                         <table style="text-align:center;">
                             <? foreach ($order['products'] as $product) {
@@ -88,7 +71,33 @@
                     <td>
                         <table style="width:100%">
                             <? foreach ($order['products'] as $product) {
+                                echo '<tr><td>' . $product['package_size'] . '</td></tr>';
+                            }
+                            ?>
+                        </table>
+                    </td>
+                    <td>
+                        <table style="width:100%">
+                            <? foreach ($order['products'] as $product) {
+                                echo '<tr><td>' . $product['weight'] . '</td></tr>';
+                            }
+                            ?>
+                        </table>
+                    </td>
+                    <td>
+                        <table style="width:100%">
+                            <? foreach ($order['products'] as $product) {
                                 echo '<tr><td>' . $product['amount'] . '</td></tr>';
+                            }
+                            ?>
+                        </table>
+                    </td>
+                    <td>
+                        <table style="width:100%">
+                            <? $all_weight = 0;?>
+                            <? foreach ($order['products'] as $product) {
+                                $all_weight += ($product['weight'] * $product['amount']) / 1000;
+                                echo '<tr><td>' . ($product['weight'] * $product['amount']) / 1000  . '</td></tr>';
                             }
                             ?>
                         </table>
@@ -110,6 +119,9 @@
                         </table>
                     </td>
                     <td>
+                        <?= $orders_ready[$id] == 'f' ? 'Не готов' : 'Готов' ?>
+                    </td>
+                    <td>
                          <? if ($orders_ready[$id] == 't'): ?> 
                             <button class="end_order button_style nav_btn" data-id="<?= $id ?>">
                                 Завершить
@@ -120,13 +132,8 @@
             <? endforeach; ?>
             </tbody>
         </table>
-        </div>
-    <? endif; ?>
+    </div>
 </div>
-
-<?
-    
-?>
 
 <?php endif ?>
 <?php unset($_GET) ?>
