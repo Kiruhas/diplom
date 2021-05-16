@@ -59,13 +59,12 @@
                     <th>Артикул</th>
                     <th>Количество товара</th>
                     <th>Номера используемых поддонов</th>
-                    <th>Завершить заказ</th>
                 </tr>
             </thead>
             <tbody>
             <? foreach ($orders as $id => $order):?>
                 <tr class="row_inside <?= $_GET['scroll']==$id ? 'scroll' : '' ?>" >
-                    <td><a href="/personal_area/order_detail.php?id=<?=$id?>"><?=$id?></a></td>
+                    <td><a class="button_style nav_btn" href="/personal_area/order_detail.php?id=<?=$id?>"><?=$id?></a></td>
                     <td>
                         <?= $orders_ready[$id] == 'f' ? 'Не готов' : 'Готов' ?>
                     </td>
@@ -108,13 +107,6 @@
                             }
                             ?>
                         </table>
-                    </td>
-                    <td>
-                         <? if ($orders_ready[$id] == 't'): ?> 
-                            <button class="end_order button_style nav_btn" data-id="<?= $id ?>">
-                                Завершить
-                            </button>
-                        <? endif; ?>
                     </td>
                 </tr>
             <? endforeach; ?>

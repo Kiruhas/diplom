@@ -43,12 +43,7 @@
                     <th>Номер заказа</th>
                     <th>Содержимое</th>
                     <th>Артикул</th>
-                    <th>Размер единицы товара (ДхШхВ, см)</th>
-                    <th>Вес единицы товара (гр)</th>
                     <th>Количество товара</th>
-                    <th>Общий вес товара (кг)</th>
-                    <th>Обрешетка</th>
-                    <th>Подтвердить заказ</th>
                 </tr>
             </thead>
             <tbody>
@@ -61,7 +56,7 @@
                 pg_free_result($query);
                 ?>
                 <tr class="row_inside" <?= $_GET['scroll']==$id ? 'class="scroll" style="background-color:rgb(189, 31, 70);"' : '' ?>>
-                    <td><?= $id ?></td>
+                    <td><a class="button_style nav_btn" href="/personal_area/order_detail.php?id=<?=$id?>"><?=$id?></a></td>
                     <td>
                         <table style="width:100%">
                             <? foreach ($order['products'] as $product) {
@@ -81,44 +76,10 @@
                     <td>
                         <table style="width:100%">
                             <? foreach ($order['products'] as $product) {
-                                echo '<tr><td>' . $product['package_size'] . '</td></tr>';
-                            }
-                            ?>
-                        </table>
-                    </td>
-                    <td>
-                        <table style="width:100%">
-                            <? foreach ($order['products'] as $product) {
-                                echo '<tr><td>' . $product['weight'] . '</td></tr>';
-                            }
-                            ?>
-                        </table>
-                    </td>
-                    <td>
-                        <table style="width:100%">
-                            <? foreach ($order['products'] as $product) {
                                 echo '<tr><td>' . $product['amount'] . '</td></tr>';
                             }
                             ?>
                         </table>
-                    </td>
-                    <td>
-                        <table style="width:100%">
-                            <? $all_weight = 0;?>
-                            <? foreach ($order['products'] as $product) {
-                                $all_weight += ($product['weight'] * $product['amount']) / 1000;
-                                echo '<tr><td>' . ($product['weight'] * $product['amount']) / 1000  . '</td></tr>';
-                            }
-                            ?>
-                        </table>
-                    </td>
-                    <td>
-                        <?= $border_title ?>
-                    </td>
-                    <td>
-                        <button class="confirm_order button_style nav_btn" data-id="<?= $id ?>">
-                            Подтвердить
-                        </button>
                     </td>
                 </tr>
             <? endforeach; ?>

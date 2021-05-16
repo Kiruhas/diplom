@@ -54,17 +54,14 @@
                     <th>Номер заказа</th>
                     <th>Содержимое</th>
                     <th>Артикул</th>
-                    <th>Размер единицы товара (ДхШхВ, см)</th>
-                    <th>Вес единицы товара (гр)</th>
                     <th>Количество товара</th>
-                    <th>Общий вес товара (кг)</th>
-                    <th>Номера использованных поддонов</th>
+                    <th>Номера используемых поддонов</th>
                 </tr>
             </thead>
             <tbody>
             <? foreach ($orders as $id => $order):?>
                 <tr class="row_inside">
-                    <td><?= $id ?></td>
+                    <td><a class="button_style nav_btn" href="/personal_area/order_detail.php?id=<?=$id?>"><?=$id?></a></td>
                     <td>
                         <table style="width:100%">
                             <? foreach ($order['products'] as $product) {
@@ -84,33 +81,7 @@
                     <td>
                         <table style="width:100%">
                             <? foreach ($order['products'] as $product) {
-                                echo '<tr><td>' . $product['package_size'] . '</td></tr>';
-                            }
-                            ?>
-                        </table>
-                    </td>
-                    <td>
-                        <table style="width:100%">
-                            <? foreach ($order['products'] as $product) {
-                                echo '<tr><td>' . $product['weight'] . '</td></tr>';
-                            }
-                            ?>
-                        </table>
-                    </td>
-                    <td>
-                        <table style="width:100%">
-                            <? foreach ($order['products'] as $product) {
                                 echo '<tr><td>' . $product['amount'] . '</td></tr>';
-                            }
-                            ?>
-                        </table>
-                    </td>
-                    <td>
-                        <table style="width:100%">
-                            <? $all_weight = 0;?>
-                            <? foreach ($order['products'] as $product) {
-                                $all_weight += ($product['weight'] * $product['amount']) / 1000;
-                                echo '<tr><td>' . ($product['weight'] * $product['amount']) / 1000  . '</td></tr>';
                             }
                             ?>
                         </table>

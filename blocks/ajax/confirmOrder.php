@@ -39,6 +39,9 @@ if ($products) {
         $palet_border = "$revenue_border" . "x$revenue_border" . "x$revenue_border";
         $prod = checkFill($products[$key]['package_size'], $products[$key]["amount"], "$revenue_border" . "x$revenue_border" . "x$revenue", $palets, $palet_border);
         $products[$key]['palets'] = $prod[1];
+        foreach ($prod[3] as $key1 => $count) {
+            $products[$key]['palet_contain'][$key1] = $count[0];
+        }
 
         $products[$key]['last_palet_value'] = $prod[2];
         $products[$key]['last_palet_percent'] = $prod[0];
@@ -46,7 +49,7 @@ if ($products) {
         $revenue = $revenue_border - $prod[0];
         pg_free_result($query);
     }
-
+    
     
     
     for ($i = 0; $i < $palets; $i++) {
@@ -60,6 +63,16 @@ if ($products) {
     $counter = 0;
     $counterProductsOnOne = 0;
     $counterPalets = 0;
+
+    foreach ($products as $key => $product) {
+        foreach ($product['palet_contain'] as $key1 => $palet) {
+            $palet_contain[$paletsBusy[$key1]] = ceil($palet/50);
+        }
+        unset($products[$key]['palet_contain']);
+        $products[$key]['palet_contain'] = $palet_contain;
+        unset($palet_contain);
+    }
+    
 
     foreach ($products as $key => $product) {
         if (!$paletsBusy[1]) {

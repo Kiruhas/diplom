@@ -107,7 +107,9 @@ function scrollToElement(ele) {
 $(document).ready(function () {
     var $scroll_elem = $(".scroll");
     if ($scroll_elem) {
-        scrollToElement($(".scroll"));
+        $('html,body').animate({
+            scrollTop: $(".scroll").offset().top - $(window).height()/2
+         }, 1000);
     }
 });
 

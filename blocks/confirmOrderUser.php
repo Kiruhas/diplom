@@ -30,7 +30,10 @@ if ($products) {
 
     require_once $_SERVER['DOCUMENT_ROOT'] . "/blocks/clearBasket.php";
 }
+
 ?>
+<?php require "../blocks/html_structure_open.php" ?>
+<?php require "../blocks/header.php" ?>
 
 <div class="container">
     <? if ($contain): ?>

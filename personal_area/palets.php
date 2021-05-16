@@ -41,10 +41,10 @@
             </thead>
             <tbody>
             <? foreach ($palets as $id => $palet):?>
-                <tr class="row_inside">
+                <tr class="row_inside <?= $_GET['scroll']==$id ? 'scroll' : '' ?>">
                     <td><?= $id ?></td>
                     <td>
-                        <?= $palet['order_id'] ? '<a class="button_style nav_btn" href="/personal_area/active_orders.php?scroll=' . $palet['order_id'] . '">' . $palet['order_id'] . '</a>' : ''?>
+                        <?= $palet['order_id'] ? '<a class="button_style nav_btn" href="/personal_area/order_detail.php?id=' . $palet['order_id'] . '">' . $palet['order_id'] . '</a>' : ''?>
                     </td>
                     <td><?= $palet['palet_size'] ?></td>
                     <td>

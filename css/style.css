@@ -449,3 +449,43 @@ td {
     right: 1%;
     color: rgba(88, 88, 88, 0.623);
 }
+
+/* Order detail */
+
+.order {
+    width: 100%;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+.order_head {
+    margin-bottom: 10px;
+}
+
+.order_contain {
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+    font-size: 16px;
+}
+
+.contain_detail {
+    position: relative;
+    width: 300px;
+    margin-right: 4%;
+    text-align: left;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 2px solid rgba(38, 116, 31, 0.871);
+    border-radius: 10px;
+}
+
+.end_order_detail {
+    margin-top: 15px;
+    font-size: 22px;
+}
+
+.detail_palet {
+    margin: 0;
+    padding: 1px 5px;
+}

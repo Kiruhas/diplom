@@ -1,5 +1,5 @@
 <? 
-function checkFill ($product_size, $product_count, $palet_size, $palets_amount, $palet_with_border) {
+function checkFill ($product_size, $product_count, $palet_size, $palets_amount, $palet_with_border, $palet_contain = []) {
     $palet = explode('x', $palet_size); // Получаем размеры поддона ДхШхВ
     $palet_border = explode('x', $palet_with_border); // Получаем размеры поддона ДхШхВ с обрешеткой
     $product = explode('x', $product_size); // Получаем размеры вещи ДхШхВ
@@ -13,13 +13,15 @@ function checkFill ($product_size, $product_count, $palet_size, $palets_amount, 
     if ($productsOnPalet < $product_count) {
         // Значит не хватает
         $residue = $product_count - $productsOnPalet; // Остаток, который не влез на поддон
-        return checkFill($product_size, $residue, $palet_with_border, $palets_amount, $palet_with_border); // Рекурсия - берем еще поддон
+        $palet_contain[$palets_amount - 1][] = $productsOnPalet;
+        return checkFill($product_size, $residue, $palet_with_border, $palets_amount, $palet_with_border, $palet_contain); // Рекурсия - берем еще поддон
     } else {
         // Нормально, считаем 
+        $palet_contain[$palets_amount - 1][] = $product_count;
         $percentFill = ceil($product_count / ($productsOnPalet / 100)); // Процент заполненности
         while ($percentFill % $product[2]) { // Пока процент не делится на высоту без остатка
             $percentFill += 1;
         }
-        return [$percentFill, $palets_amount, $product_count]; // Возвращаем [процент заполнения последнего поддона, количество поддонов]
+        return [$percentFill, $palets_amount, $product_count, $palet_contain]; // Возвращаем [процент заполнения последнего поддона, количество поддонов]
     }
 }
