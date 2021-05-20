@@ -48,6 +48,5 @@ if ($products) {
 </div>
 
 <?php require $_SERVER['DOCUMENT_ROOT'] . "/blocks/html_structure_close.php" ?>
-<?
 
 

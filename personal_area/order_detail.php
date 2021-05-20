@@ -86,7 +86,7 @@
                         <b>Размер:</b> <?= $product['size']?><br>
                         <b>Цвет:</b> <?= $product['color']?><br>
                         <b>Артикул:</b> <?=$prod_id . 'C-' . $colors[$product['color']] . '/S-' . $product['size']?> <br>
-                        <b>Размер единицы (упаковка):</b> <?= $product['package_size']?> мм<br>
+                        <b>Размер упаковочной единицы:</b> <?= $product['package_size']?> мм (ДхШхВ)<br>
                         <b>Вес единицы:</b> <?= $product['weight']?> гр<br>
                         <b>Количество товара:</b> <?= $product['amount']?> шт<br>
                         <? if ($order_agreed =='t'): ?>
@@ -104,7 +104,7 @@
                 <? endforeach; ?>
             <? endforeach; ?>       
         </div>
-        <b>Максимум в одной коробке:</b> 50шт<br>
+        <b>Максимум в одной коробке:</b> 50 шт<br>
         <b>Суммарный вес всех позиций:</b> <?= $all_weight?> кг <br> 
         <? if ($order_ready == 't' && $order_active == 't'): ?> 
             <button class="end_order end_order_detail button_style nav_btn " data-id="<?= $order_id ?>">
