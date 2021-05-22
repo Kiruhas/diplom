@@ -131,6 +131,22 @@ $('.confirm_palet').on('click', function(){
     });
 });
 
+$('.delete_staff').on('click', function(){
+    var id = $(this).data('id');
+    var btn = $(this);
+    $.ajax({
+        url: "../blocks/ajax/deleteStaff.php",
+        type: "post",
+        data: {
+            user_id: id,
+        }
+    }).done(function(result){
+        console.log(result);
+        btn.before("<span>Удален</span>");
+        btn.remove();
+    });
+});
+
 
 
 

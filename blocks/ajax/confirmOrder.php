@@ -18,7 +18,6 @@ while ($res = pg_fetch_object($query)) {
 }
 pg_free_result($query);
 
-
 $query_text = "SELECT size FROM borders WHERE id=$border_id";
 $query = pg_query($db_connection, $query_text);
 $border_size = (int)pg_fetch_object($query)->size;
@@ -38,7 +37,10 @@ if ($products) {
         $products[$key]['package_size'] = $res->size;
         $palet_border = "$revenue_border" . "x$revenue_border" . "x$revenue_border";
         $prod = checkFill($products[$key]['package_size'], $products[$key]["amount"], "$revenue_border" . "x$revenue_border" . "x$revenue", $palets, $palet_border);
+        var_dump($prod);
         $products[$key]['palets'] = $prod[1];
+        if ($palets == $prod[1])
+            $products[$key]['palets'] = 1;
         foreach ($prod[3] as $key1 => $count) {
             $products[$key]['palet_contain'][$key1] = $count[0];
         }
@@ -49,8 +51,6 @@ if ($products) {
         $revenue = $revenue_border - $prod[0];
         pg_free_result($query);
     }
-    
-    
     
     for ($i = 0; $i < $palets; $i++) {
         $paletsBusy[] = $paletsFree[$i];
@@ -72,7 +72,6 @@ if ($products) {
         $products[$key]['palet_contain'] = $palet_contain;
         unset($palet_contain);
     }
-    
 
     foreach ($products as $key => $product) {
         if (!$paletsBusy[1]) {
@@ -119,6 +118,4 @@ if ($products) {
         $query = pg_query($db_connection, $query_text);
         pg_free_result($query);
     }
-
-    
 }

@@ -19,6 +19,7 @@
         pg_free_result($query);
     ?>
     <div>
+        <div class="personal_header_name">Добавить поддон</div>
         <form type="post" action="/blocks/confirmAddPalet.php">
             <div class="choice_button">
                 <span>Выберите размер поддона: </span>

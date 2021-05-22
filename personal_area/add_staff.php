@@ -10,9 +10,8 @@
 <?php if ($_COOKIE['log'] == 'Да' && $dolzhn_active == 'admin'): ?>
 
 <div class="container">
-    <?php 
-    ?>
     <div>
+        <div class="personal_header_name">Добавить сотрудника</div>
         <form type="post" action="/blocks/confirmAddStaff.php">
             <div class="choice_button">
                 <input type="text"  name="username" placeholder="Введите логин">
